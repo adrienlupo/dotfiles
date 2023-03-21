@@ -17,7 +17,7 @@
   co = checkout
   st = status -sb
   br = branch
-  ci = commit
+	ci = sweep
   fo = fetch origin
   d = !git --no-pager diff
   dt  = difftool
@@ -29,8 +29,8 @@
   # Get default branch name (copied from https://stackoverflow.com/a/67672350/14870317)
   defaultBranch = !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
 
-  # Clean merged branches (adapted from https://stackoverflow.com/a/6127884/14870317)
-  sweep = !git branch --merged $(git defaultBranch) | grep -E -v " $(git defaultBranch)$" | xargs -r git branch -d && git remote prune origin
+  # Clean merged branches
+  sweep = !git branch --merged master | grep -v 'main$' | xargs git branch -d && git remote prune origin
 
   # http://www.jukie.net/bart/blog/pimping-out-git-log
   lg = log --graph --all --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(yellow)%d%Creset'
@@ -44,6 +44,7 @@
 
   # Removes a file from the index
   unstage = reset HEAD --
+	sw = sweep
 
 [help]
   autocorrect = 1
